@@ -92,13 +92,16 @@ WSGI_APPLICATION = 'studybud.wsgi.application'
 
 DATABASES = {
   'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': os.environ.get('PGDATABASE'),
-    'USER': os.environ.get('PGUSER'),
-    'PASSWORD': os.environ.get('PGPASSWORD'),
-    'HOST': os.environ.get('PGHOST'),
-    'PORT': os.environ.get('PGPORT'),
-  }
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': os.environ.get('MYSQLDATABASE'),
+    'USER': os.environ.get('MYSQLUSER'),
+    'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD'),
+    'HOST': os.environ.get('MYSQLHOST'),
+    'PORT': os.environ.get('MYSQLPORT'),
+  },
+    'OPTIONS': {  
+        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
+    }
 }
 
 
@@ -149,3 +152,5 @@ MEDIA_ROOT = BASE_DIR / 'static/images'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = ['https://studybudnew-production.up.railway']
