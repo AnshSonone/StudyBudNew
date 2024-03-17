@@ -10,7 +10,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-COPY requirements.txt ./
+COPY requirements.txt
 
 RUN pip install -r requirements.txt
 
