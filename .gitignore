@@ -1,4 +1,3 @@
 /task
 .env
-db.sqlite3
 .venv
