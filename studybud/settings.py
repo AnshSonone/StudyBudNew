@@ -12,7 +12,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+import dj_database_url
 
+
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,10 +30,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECRET_KEY = os.environ.get('SECRET_kEY')
 
-SECRET_KEY='675j*-51&qo+%&#g6%y^06#k$xs(+@cmith-!frh3r4)^%jf'
+environ.Env.read_env(BASE_DIR / 'studybud/.env',)
+
+SECRET_KEY= env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+if env('ENVIRONMENT')=='production':
+    DEBUG = False
+else:
+    DEBUG= True
 
 ALLOWED_HOSTS = ['*']
 
@@ -83,24 +94,22 @@ WSGI_APPLICATION = 'studybud.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3', 
-#         'NAME': BASE_DIR / 'db.sqlite3'
-#     }
-# }
+if env('ENVIRONMENT')!='production':
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', 
+        'NAME': BASE_DIR / 'db.sqlite3'
+    }
+    }
 
 DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': os.environ.get('MYSQLDATABASE'),
-    'USER': os.environ.get('MYSQLUSER'),
-    'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD'),
-    'HOST': os.environ.get('MYSQLHOST'),
-    'PORT': os.environ.get('MYSQLPORT'),
-  },
-    'OPTIONS': {  
-        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('MYSQLDATABASE'),
+        'USER': env('MYSQLUSER'),
+        'PASSWORD': env('MYSQL_PASSWORD'),
+        'HOST': env('MYSQLHOST'),
+        'PORT': env('MYSQLPORT')
     }
 }
 
@@ -145,6 +154,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
+UPLOAD_URL = BASE_DIR / 'static/images'
 MEDIA_ROOT = BASE_DIR / 'static/images'
 
 
