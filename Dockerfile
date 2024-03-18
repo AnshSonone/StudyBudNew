@@ -2,6 +2,8 @@ FROM python:3.12.1-slim
 
 # install needed packages
 
+ENV PYTHON_VERSION 3.12.1
+
 WORKDIR /app
 
 COPY requirements.txt requirements.txt
