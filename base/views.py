@@ -109,8 +109,7 @@ def userProfile(request, pk):
     rooms = user.room_set.all()
     room_messages = user.message_set.all()
     topics = Topic.objects.all() 
-
-    print(user)
+    
     context = {
         'user': user,
         'rooms': rooms,
