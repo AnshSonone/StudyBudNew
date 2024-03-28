@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  db:
+    image: mysql
+  web:
+    build: .
+    ports:
+      - "8000:8000"
